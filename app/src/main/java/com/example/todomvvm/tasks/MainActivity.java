@@ -2,6 +2,7 @@ package com.example.todomvvm.tasks;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import android.widget.SearchView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -40,6 +41,22 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater  = getMenuInflater();
         inflater.inflate(R.menu.my_menu,menu);
+
+        MenuItem searchitem = menu.findItem(R.id.search_view);
+        SearchView searchView= (SearchView) searchitem.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
         return true;
     }
 
@@ -136,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
         });
     }
 
+
     @Override
     public void onItemClickListener(int itemId) {
         // Launch AddTaskActivity adding the itemId as an extra in the intent
@@ -143,4 +161,5 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
         intent.putExtra(AddEditTaskActivity.EXTRA_TASK_ID, itemId);
         startActivity(intent);
     }
+
 }

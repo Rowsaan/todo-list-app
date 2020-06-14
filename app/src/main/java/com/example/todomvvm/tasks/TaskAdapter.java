@@ -5,6 +5,8 @@ import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -14,6 +16,8 @@ import com.example.todomvvm.R;
 import com.example.todomvvm.database.TaskEntry;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
@@ -21,7 +25,7 @@ import java.util.Locale;
  * This TaskAdapter creates and binds ViewHolders, that hold the description and priority of a task,
  * to a RecyclerView to efficiently display data.
  */
-public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
+public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> implements Filterable {
 
     // Constant for date format
     private static final String DATE_FORMAT = "dd/MM/yyy";
@@ -30,6 +34,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     final private ItemClickListener mItemClickListener;
     // Class variables for the List that holds task data and the Context
     private List<TaskEntry> mTaskEntries;
+    private List<TaskEntry> mTaskEntriesAll;
     private Context mContext;
     // Date formatter
     private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
@@ -43,6 +48,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public TaskAdapter(Context context, ItemClickListener listener) {
         mContext = context;
         mItemClickListener = listener;
+
     }
 
     /**
@@ -132,7 +138,40 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public void setTasks(List<TaskEntry> taskEntries) {
         mTaskEntries = taskEntries;
         notifyDataSetChanged();
+        mTaskEntriesAll=new ArrayList<>();
+        mTaskEntriesAll.addAll(mTaskEntries);
     }
+
+    @Override
+    public Filter getFilter() {
+        return TaskEntryFilter;
+    }
+    private Filter TaskEntryFilter=new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<TaskEntry>filteredList = new ArrayList<>();
+            if (constraint==null || constraint.length()==0){
+                filteredList.addAll(mTaskEntriesAll);
+            }else {
+                String filter=constraint.toString().toLowerCase().trim();
+                for (TaskEntry ritem:mTaskEntriesAll){
+                    if (ritem.getDescription().toLowerCase().contains(filter)){
+                        filteredList.add(ritem);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values =  filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            mTaskEntries.clear();
+            mTaskEntries.addAll((Collection<? extends TaskEntry>) results.values);
+            notifyDataSetChanged();
+        }
+    };
 
     public interface ItemClickListener {
         void onItemClickListener(int itemId);
