@@ -160,7 +160,7 @@ public class AddEditTaskActivity extends AppCompatActivity {
 
         TaskEntry todo = new TaskEntry(description, priority, date);
         if(description.isEmpty()){
-            Toast.makeText(AddEditTaskActivity.this, "Please specify Field is not empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddEditTaskActivity.this, "Field is empty!!", Toast.LENGTH_SHORT).show();
         }
 else {
             if (mTaskId == DEFAULT_TASK_ID)
@@ -171,7 +171,8 @@ else {
 
             }
 
-            Toast.makeText(AddEditTaskActivity.this, "NoteAdded", Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(AddEditTaskActivity.this, "Task Added!!", Toast.LENGTH_SHORT).show();
             finish();
         }
     }
