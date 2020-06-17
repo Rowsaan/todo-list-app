@@ -160,4 +160,8 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
         startActivity(intent);
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(MainActivity.this,LoginActivity.class));
+    }
 }
