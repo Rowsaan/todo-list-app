@@ -6,6 +6,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import java.util.List;
@@ -31,5 +32,21 @@ public interface TaskDao {
 
     @Query("Select * from task where id =:taskId")
     LiveData<TaskEntry> loadTAskById(int taskId);
+
+    @Query("Select * from user where email= :mail and password= :password")
+
+    UserEntry getUser(String mail,String password);
+
+    @Insert
+    void insert(UserEntry user);
+    @Update
+    void updateU (UserEntry user);
+
+    @Delete
+    void deleteU    (UserEntry user);
+
+    @Transaction
+    @Query("Select * from task ,user where user.id = task.user_id order by priority")
+    public LiveData<List<Relation_table>> getUserTask();
 
 }

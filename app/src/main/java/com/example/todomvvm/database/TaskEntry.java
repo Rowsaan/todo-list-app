@@ -16,6 +16,15 @@ public class TaskEntry {
     private int priority;
     @ColumnInfo(name="updated_at")
     private Date updatedAt;
+    private int user_id;
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        user_id = user_id;
+    }
 
     @Ignore
     public TaskEntry(String description, int priority, Date updatedAt) {
@@ -24,11 +33,12 @@ public class TaskEntry {
         this.updatedAt = updatedAt;
     }
 
-    public TaskEntry(int id, String description, int priority, Date updatedAt) {
+    public TaskEntry(int id, String description, int priority, Date updatedAt, int user_id) {
         this.id = id;
         this.description = description;
         this.priority = priority;
         this.updatedAt = updatedAt;
+        this.user_id= user_id;
     }
 
     public int getId() {
