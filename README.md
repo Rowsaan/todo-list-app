@@ -1,4 +1,6 @@
 # todo-list-app
+----
+This application is basically build for daily purpose of recording task and activities which will be remainded to User for later complition.
 ---
 ##Features
 ---
