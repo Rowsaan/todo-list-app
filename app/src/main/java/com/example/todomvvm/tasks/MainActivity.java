@@ -68,13 +68,11 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
                     Toast.makeText(MainActivity.this,"All Notes Deleted",Toast.LENGTH_SHORT).show();
                 return  true;
                 case R.id.item2:
-                Toast.makeText(this,"item 2 Selected",Toast.LENGTH_SHORT).show();
                 return true;
-                case R.id.byDateUpdated:
-                Toast.makeText(this,"Sort by date",Toast.LENGTH_SHORT).show();
-                return true;
+
             case R.id.bypriority:
-                Toast.makeText(this,"Sort by p",Toast.LENGTH_SHORT).show();
+                Intent intent= new Intent(this, LoginActivity.class);
+                        this.startActivity(intent);
                 return true;
 
 

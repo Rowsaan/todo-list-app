@@ -80,7 +80,7 @@ public class Register extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(Register.this,LoginActivity.class));
             }
         });
 
