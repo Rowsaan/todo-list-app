@@ -10,6 +10,7 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todomvvm.R;
@@ -36,9 +37,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     private List<TaskEntry> mTaskEntries;
     private List<TaskEntry> mTaskEntriesAll;
     private Context mContext;
+    private FragmentManager fragmentManager;
     // Date formatter
     private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
-
     /**
      * Constructor for the TaskAdapter that initializes the Context.
      *
@@ -49,7 +50,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         mContext = context;
         mItemClickListener = listener;
 
+
     }
+
+
+
 
     /**
      * Called when ViewHolders are created to fill a RecyclerView.

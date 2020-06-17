@@ -2,13 +2,14 @@ package com.example.todomvvm.tasks;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import android.widget.SearchView;
+    import android.widget.SearchView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -68,10 +69,10 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
                     Toast.makeText(MainActivity.this,"All Notes Deleted",Toast.LENGTH_SHORT).show();
                 return  true;
                 case R.id.item2:
-                Toast.makeText(this,"item 2 Selected",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"Select Sorting Type",Toast.LENGTH_SHORT).show();
                 return true;
                 case R.id.byDateUpdated:
-                Toast.makeText(this,"Sort by date",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"Sorted by date",Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.bypriority:
                 Toast.makeText(this,"Sort by p",Toast.LENGTH_SHORT).show();
@@ -105,6 +106,12 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
 
         DividerItemDecoration decoration = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
         mRecyclerView.addItemDecoration(decoration);
+
+        ViewPager viewPager=findViewById(R.id.viewPager);
+        TaskAdapter mewmew= new TaskAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(mewmew);
+
+        );
 
         /*
          Add a touch helper to the RecyclerView to recognize when a user swipes to delete an item.
@@ -151,6 +158,8 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
                 mAdapter.setTasks(taskEntries);
             }
         });
+
+
     }
 
 
