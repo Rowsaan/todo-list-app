@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setProgress(0);
 
-        database = Room.databaseBuilder(this,AppDatabase.class,"abhash-database.db")
+        database = Room.databaseBuilder(this,AppDatabase.class,"Roshan-database.db")
                 .allowMainThreadQueries()
 
                 .build();
@@ -100,5 +100,11 @@ public class LoginActivity extends AppCompatActivity {
         {
             return false;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
+        finish();
     }
 }

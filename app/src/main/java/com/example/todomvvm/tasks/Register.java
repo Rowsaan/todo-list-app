@@ -50,7 +50,7 @@ public class Register extends AppCompatActivity {
         registerButton = findViewById(R.id.register_user);
         cancelButton = findViewById(R.id.cancel_user);
 
-        taskDaoO = Room.databaseBuilder(this, AppDatabase.class, "abhash-database.db")
+        taskDaoO = Room.databaseBuilder(this, AppDatabase.class, "Roshan-database.db")
                 .allowMainThreadQueries()
                 .build()
                 .taskDao();
@@ -77,7 +77,12 @@ public class Register extends AppCompatActivity {
             }
         });
 
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
 
 
 

@@ -3,11 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#FAD093"
     android:orientation="horizontal"
-    android:paddingBottom="8dp"
     android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="8dp"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="8dp"
     tools:context="com.example.android.todolist.MainActivity">
 
     <LinearLayout
@@ -22,7 +23,9 @@
             style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
             android:textColor="@android:color/primary_text_light"
+            android:textStyle="bold"
             tools:text="Description" />
 
         <!-- TextView that displays the update date -->
@@ -43,12 +46,14 @@
         android:layout_width="22dp"
         android:layout_height="22dp"
         android:layout_gravity="center"
-        android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:background="@drawable/priority_circle"
+        android:fontFamily="casual"
         android:gravity="center"
         android:textAlignment="center"
         android:textColor="@android:color/primary_text_light"
+        android:textStyle="bold"
         tools:text="1" />
 
 </LinearLayout>
