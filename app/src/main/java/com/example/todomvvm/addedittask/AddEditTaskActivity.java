@@ -19,6 +19,7 @@ import com.example.todomvvm.R;
 import com.example.todomvvm.database.AppDatabase;
 import com.example.todomvvm.database.Repository;
 import com.example.todomvvm.database.TaskEntry;
+import com.example.todomvvm.database.userRepo;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,6 +27,7 @@ import java.util.Locale;
 
 public class AddEditTaskActivity extends AppCompatActivity {
 
+    private int user_id;
     private final int REQ_CODE = 100;
     // Extra for the task ID to be received in the intent
     public static final String EXTRA_TASK_ID = "extraTaskId";
@@ -54,6 +56,7 @@ public class AddEditTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_task);
 
+        user_id = Integer.parseInt(getIntent().getStringExtra("userId"));
 
 
         initViews();
@@ -158,7 +161,7 @@ public class AddEditTaskActivity extends AppCompatActivity {
         int priority = getPriorityFromViews();
         Date date = new Date();
 
-        TaskEntry todo = new TaskEntry(description, priority, date);
+        TaskEntry todo = new TaskEntry(description, priority, date,user_id);
         if(description.isEmpty()){
             Toast.makeText(AddEditTaskActivity.this, "Field is empty!!", Toast.LENGTH_SHORT).show();
         }

@@ -17,6 +17,7 @@ import com.example.todomvvm.R;
 import com.example.todomvvm.database.AppDatabase;
 import com.example.todomvvm.database.TaskDao;
 import com.example.todomvvm.database.UserEntry;
+import com.example.todomvvm.database.userRepo;
 
 public class Register extends AppCompatActivity {
 
@@ -27,8 +28,9 @@ public class Register extends AppCompatActivity {
 
     private Button registerButton;
     private Button cancelButton;
-
+    private AppDatabase database;
     private TaskDao taskDaoO;
+    private userRepo userrepo;
     private ProgressDialog progressDialog;
 
 
@@ -44,16 +46,15 @@ public class Register extends AppCompatActivity {
         progressDialog.setProgress(0);
 
         name = findViewById(R.id.register_name);
+        database = AppDatabase.getInstance(this);
+        userrepo = new userRepo(database);
         lastName = findViewById(R.id.register_lastName);
         email = findViewById(R.id.register_email);
         password = findViewById(R.id.register_password);
         registerButton = findViewById(R.id.register_user);
         cancelButton = findViewById(R.id.cancel_user);
 
-        taskDaoO = Room.databaseBuilder(this, AppDatabase.class, "Roshan-database.db")
-                .allowMainThreadQueries()
-                .build()
-                .taskDao();
+
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +66,7 @@ public class Register extends AppCompatActivity {
                         @Override
                         public void run() {
                             UserEntry user = new UserEntry(name.getText().toString(),lastName.getText().toString(),email.getText().toString(),password.getText().toString());
-                            taskDaoO.insert(user);
+                            userrepo.insertUser(user);
                             progressDialog.dismiss();
                             startActivity(new Intent(Register.this,LoginActivity.class));
                         }

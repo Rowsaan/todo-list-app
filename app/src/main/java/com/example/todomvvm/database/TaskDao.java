@@ -14,8 +14,8 @@ import java.util.List;
 @Dao
 public interface TaskDao {
 
-    @Query("select * from task order by priority")
-    LiveData<List<TaskEntry>> loadAllTasks();
+    @Query("select * from task where user_id=:user_id order by priority")
+    LiveData<List<TaskEntry>> loadAllTasks(int  user_id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertTask(TaskEntry task);
@@ -45,8 +45,6 @@ public interface TaskDao {
     @Delete
     void deleteU    (UserEntry user);
 
-    @Transaction
-    @Query("Select * from task ,user where user.id = task.user_id order by priority")
-    public LiveData<List<Relation_table>> getUserTask();
+
 
 }

@@ -5,6 +5,7 @@ import androidx.room.Room;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -17,6 +18,7 @@ import com.example.todomvvm.R;
 import com.example.todomvvm.database.AppDatabase;
 import com.example.todomvvm.database.TaskDao;
 import com.example.todomvvm.database.UserEntry;
+import com.example.todomvvm.database.userRepo;
 import com.example.todomvvm.tasks.MainActivity;
 import com.example.todomvvm.tasks.Register;
 
@@ -30,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     private AppDatabase database;
     private TaskDao taskDao;
     private ProgressDialog progressDialog;
+    private com.example.todomvvm.database.userRepo userrepo;
 
 
     @Override
@@ -42,12 +45,10 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Checking user");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setProgress(0);
+        database = AppDatabase.getInstance(this);
+        userrepo = new userRepo(database);
 
-        database = Room.databaseBuilder(this,AppDatabase.class,"Roshan-database.db")
-                .allowMainThreadQueries()
 
-                .build();
-        taskDao = database.taskDao();
         signIn = findViewById(R.id.SignIn);
         signUp = findViewById(R.id.Register);
         userEmail = findViewById(R.id.user_email);
@@ -61,50 +62,38 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        signIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!emptyValidation()){
-                    progressDialog.show();
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            UserEntry user = taskDao.getUser(userEmail.getText().toString(),userPassword.getText().toString());
-                            if(user!=null){
-                                Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                                i.putExtra("User",user);
-                                startActivity(i);
-                                finish();
-                            }
-                            else{
-                                Toast.makeText(LoginActivity.this,"ID password Error",Toast.LENGTH_SHORT).show();
-                            }
-                            progressDialog.dismiss();
-                        }
-                    },1000);
-                }
 
 
+
+
+
+    }
+
+    private class AsyncLogin extends AsyncTask<Void,Void,Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            int userId = userrepo.getUser(userEmail.getText().toString(), userPassword.getText().toString());
+            if (userId != 0) {
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.putExtra("userId", Integer.toString(userId));
+                startActivity(intent);
+            } else {
+                Toast.makeText(getApplicationContext(), "Invalid username or password", Toast.LENGTH_SHORT).show();
             }
-        });
-
-
-    }
-    private boolean emptyValidation()
-    {
-        if (TextUtils.isEmpty(userEmail.getText().toString())||TextUtils.isEmpty(userPassword.getText().toString())) {
-
-            return true;
-        }
-        else
-        {
-            return false;
+            return null;
         }
     }
+
+
 
     @Override
     public void onBackPressed() {
         finishAffinity();
         finish();
+    }
+
+    public void login(View view) {
+        new AsyncLogin().execute();
     }
 }

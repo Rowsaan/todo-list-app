@@ -27,10 +27,11 @@ public class TaskEntry {
     }
 
     @Ignore
-    public TaskEntry(String description, int priority, Date updatedAt) {
+    public TaskEntry(String description, int priority, Date updatedAt,int user_id) {
         this.description = description;
         this.priority = priority;
         this.updatedAt = updatedAt;
+        this.user_id = user_id;
     }
 
     public TaskEntry(int id, String description, int priority, Date updatedAt, int user_id) {
